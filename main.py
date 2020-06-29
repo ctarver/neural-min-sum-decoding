@@ -2,7 +2,8 @@
 # Run as follows:
 # python main.py 0 1 6 1 100 10000000000000000 5 hamming.alist hamming.gmat laskdjhf 0.5 100 FNOMS
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 import sys
 from tensorflow.python.framework import ops
 from helper_functions import load_code, syndrome
@@ -45,20 +46,20 @@ if NO_SIGMA_SCALING_TEST:
 else:
 	print("Scaling test input by 2/sigma")
 
-seed = int(sys.argv[1])
+seed = 0
 np.random.seed(seed)
-snr_lo = float(sys.argv[2])
-snr_hi = float(sys.argv[3])
-snr_step = float(sys.argv[4])
-min_frame_errors = int(sys.argv[5])
-max_frames = float(sys.argv[6])
-num_iterations = int(sys.argv[7])
-H_filename = sys.argv[8]
-G_filename = sys.argv[9]
-output_filename = sys.argv[10]
-L = float(sys.argv[11])
-steps = int(sys.argv[12])
-provided_decoder_type = sys.argv[13]
+snr_lo = float(1)
+snr_hi = float(6)
+snr_step = float(1)
+min_frame_errors = int(100)
+max_frames = float(10000000000000000)
+num_iterations = int(5)
+H_filename = 'codes/hamming.alist'
+G_filename = 'codes/hamming.gmat'
+output_filename = 'result'
+L = float(0.5)
+steps = int(100)
+provided_decoder_type = 'FNOMS'
 
 if ALL_ZEROS_CODEWORD_TESTING: G_filename = ""
 code = load_code(H_filename, G_filename)
